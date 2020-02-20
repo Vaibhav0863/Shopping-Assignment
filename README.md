@@ -10,7 +10,7 @@ Open terminal :computer: and run following command,
 
 	- touch orders.db
 
-	- ./Shopping\ Application 
+	- gcc -o "Shopping Assignment" "Shopping Application.c"
 
 :octocat: :heart: 
 
