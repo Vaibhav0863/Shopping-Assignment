@@ -1,6 +1,5 @@
-#ifndef DECLARATIONS
-#define DECLARATIONS
-
+#ifndef DECLARATIONS 
+#define DECLARATIONS 
 #define SIZE 50
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

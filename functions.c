@@ -10,6 +10,7 @@
 // }
 NODE *head = NULL;
 
+FILE *file;
 int len = 0;
 int order_count = 0;
 int cust_id = 0;
@@ -58,7 +59,7 @@ int get_admin_menu_choice()
 // Registraing user
 void register_customer(FILE *file)
 {
-	file = fopen("customer.db","ab+");
+	file = fopen("database/customer.db","ab+");
 
 	customer_data cust,cust1;
 
@@ -128,7 +129,7 @@ void list_product_categories(FILE *file)
 {
 	char data[SIZE];
 
-	file = fopen("category.txt","r");
+	file = fopen("database/category.txt","r");
 
 	if(file != NULL)
 	{
@@ -169,9 +170,9 @@ void add_product_categories(FILE *file)
 
 	// printf("%d\n", strcmp("mobile",cat));
 
-	FILE *fp = fopen("category.txt","r");
+	FILE *fp = fopen("database/category.txt","r");
 
-	file = fopen("category.txt","a");
+	file = fopen("database/category.txt","a");
 
 	if(file != NULL)
 	{
@@ -218,7 +219,7 @@ void loadData(FILE *fp)
 {
 	DATA data;
 
-	fp = fopen("product.db","rb");
+	fp = fopen("database/product.db","rb");
 
 	if(fp == NULL)
 	{
@@ -250,7 +251,7 @@ void loadData(FILE *fp)
 
 	order_details details;
 
-	fp = fopen("orders.db","r");
+	fp = fopen("database/orders.db","r");
 
 	if(fp == NULL)
 	{
@@ -400,12 +401,46 @@ void display_Delivered_Orders()
 {
 	ORD *trav = start;
 
-	if(order_count>0)
+	// if(order_count>0)
+	// {
+	// 	for(int i=0;i<order_count;i++)
+	// 	{
+	// 		if(trav->data.status == 'D')
+	// 		{
+	// 			printf("-------------------------------------------------\n");
+	// 			printf("CUSTOMER ID : %d\n", trav->data.customer_id);
+	// 			printf("PRODUCT ID : %d\n", trav->data.product_id);
+	// 			printf("QUANTITY : %d\n", trav->data.quantity);
+	// 			printf("DATE : %d/%d/%d\n", trav->data.date.dd,trav->data.date.mm,trav->data.date.yy);
+	// 			printf("STATUS : %c\n", trav->data.status);
+	// 			printf("-------------------------------------------------\n");
+	// 		}
+
+	// 		trav = trav->next;
+	// 	}
+	// 	printf("\n");
+	// }
+	// else
+	// {
+	// 	printf("--------------------------------\n");
+	// 	printf("DATA NOT FOUND...              |\n");
+	// 	printf("--------------------------------\n");
+	// }
+
+	if(order_count == 0)
 	{
+		printf("--------------------------------\n");
+		printf("ORDERS NOT FOUND     |\n");
+		printf("--------------------------------\n");
+	}
+	else
+	{
+		int flag = 0;
 		for(int i=0;i<order_count;i++)
 		{
 			if(trav->data.status == 'D')
 			{
+				flag = 1;
 				printf("-------------------------------------------------\n");
 				printf("CUSTOMER ID : %d\n", trav->data.customer_id);
 				printf("PRODUCT ID : %d\n", trav->data.product_id);
@@ -417,13 +452,13 @@ void display_Delivered_Orders()
 
 			trav = trav->next;
 		}
-		printf("\n");
-	}
-	else
-	{
-		printf("--------------------------------\n");
-		printf("DATA NOT FOUND...              |\n");
-		printf("--------------------------------\n");
+
+		if(flag == 0)
+		{
+			printf("----------------------\n");
+			printf("ORDERS NOT FOUND     |\n");
+			printf("----------------------\n");
+		}
 	}
 }
 
@@ -680,7 +715,7 @@ void addOrderDetails()
 //####################### UPLOAD PRODUCT AND ORDER DETAILS ###############
 void uploadData(FILE *fp)
 {
-	fp = fopen("product.db","wb");
+	fp = fopen("database/product.db","wb");
 
 	if(fp == NULL)
 	{
@@ -707,7 +742,7 @@ void uploadData(FILE *fp)
 	fclose(fp);
 
 	//////////////////////////////////////
-	fp = fopen("orders.db","wb");
+	fp = fopen("database/orders.db","wb");
 
 	if(fp == NULL)
 	{

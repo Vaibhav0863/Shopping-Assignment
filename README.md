@@ -1,6 +1,6 @@
-# Shopping Application :wink:
+# Shopping Application
 
-# Steps to run programs :bowtie:
+# Steps to run programs
 
 Open terminal :computer: and run following command,
 	
