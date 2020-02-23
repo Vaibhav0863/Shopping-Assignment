@@ -49,7 +49,7 @@ int get_admin_menu_choice()
 	int choice;
 	printf("------------------------------------\n");
 	printf("================= ADMIN MENU ========================\n");
-	printf("0. EXIT\n1. LIST PRODUCT CATEGORIES\n2. ADD PRODUCT CATEGORIES\n3. LIST ALL PRODUCT\n4. FIND PRODUCT BY NAME\n5. EDIT PRODUCT\n6. DELETE PRODUCT\n7. LIST PENDING OPDERS\n8. LIST DELIVERED ORDERS\n9. DISPATCH ORDER\n10. ADD PRODUCT\n");
+	printf("0. EXIT\n1. LIST PRODUCT CATEGORIES\n2. ADD PRODUCT CATEGORIES\n3. LIST ALL PRODUCT\n4. FIND PRODUCT BY NAME\n5. EDIT PRODUCT\n6. DELETE PRODUCT\n7. LIST PENDING ORDERS\n8. LIST DELIVERED ORDERS\n9. DISPATCH ORDER\n10. ADD PRODUCT\n");
 	printf("\nEnter Your Choice : ");
 	scanf("%d",&choice);
 
@@ -211,6 +211,7 @@ void add_product_categories(FILE *file)
 		printf("FILE ERROR\n");
 	}
 	fclose(file);
+	fclose(fp);
 }
 
 // ################# LOADING PRODUCT FILE INTO LIST ##################
@@ -281,6 +282,7 @@ void loadData(FILE *fp)
 			printf("------------------------\n");
 		}
 	}
+	fclose(fp);
 }
 
 void addLastNode(DATA *file_data)
@@ -369,43 +371,11 @@ void display_Pending_Orders()
 {
 	ORD *trav = start;
 
-	if(order_count>0)
-	{
-		for(int i=0;i<order_count;i++)
-		{
-			if(trav->data.status == 'P')
-			{
-				printf("-------------------------------------------------\n");
-				printf("CUSTOMER ID : %d\n", trav->data.customer_id);
-				printf("PRODUCT ID : %d\n", trav->data.product_id);
-				printf("QUANTITY : %d\n", trav->data.quantity);
-				printf("DATE : %d/%d/%d\n", trav->data.date.dd,trav->data.date.mm,trav->data.date.yy);
-				printf("STATUS : %c\n", trav->data.status);
-				printf("-------------------------------------------------\n");
-			}
-
-			trav = trav->next;
-		}
-		printf("\n");
-	}
-	else
-	{
-		printf("--------------------------------\n");
-		printf("DATA NOT FOUND...              |\n");
-		printf("--------------------------------\n");
-	}
-}
-
-//################ DISPLAYING PENDING ORDERS FROM ORDER FILE ############
-void display_Delivered_Orders()
-{
-	ORD *trav = start;
-
 	// if(order_count>0)
 	// {
 	// 	for(int i=0;i<order_count;i++)
 	// 	{
-	// 		if(trav->data.status == 'D')
+	// 		if(trav->data.status == 'P')
 	// 		{
 	// 			printf("-------------------------------------------------\n");
 	// 			printf("CUSTOMER ID : %d\n", trav->data.customer_id);
@@ -431,6 +401,49 @@ void display_Delivered_Orders()
 	{
 		printf("--------------------------------\n");
 		printf("ORDERS NOT FOUND     |\n");
+		printf("--------------------------------\n");
+	}
+	else
+	{
+		int flag = 0;
+		for(int i=0;i<order_count;i++)
+		{
+			if(trav->data.status == 'P')
+			{
+				flag = 1;
+				printf("-------------------------------------------------\n");
+				printf("CUSTOMER ID : %d\n", trav->data.customer_id);
+				printf("PRODUCT ID : %d\n", trav->data.product_id);
+				printf("QUANTITY : %d\n", trav->data.quantity);
+				printf("DATE : %d/%d/%d\n", trav->data.date.dd,trav->data.date.mm,trav->data.date.yy);
+				printf("STATUS : %c\n", trav->data.status);
+				printf("-------------------------------------------------\n");
+			}
+
+			trav = trav->next;
+		}
+
+		if(flag == 0)
+		{
+			printf("------------------------------\n");
+			printf("PENDING ORDERS NOT FOUND     |\n");
+			printf("------------------------------\n");
+		}
+	}
+
+
+}
+
+//################ DISPLAYING PENDING ORDERS FROM ORDER FILE ############
+void display_Delivered_Orders()
+{
+	ORD *trav = start;
+
+
+	if(order_count == 0)
+	{
+		printf("--------------------------------\n");
+		printf("ORDERS NOT FOUND     		   |\n");
 		printf("--------------------------------\n");
 	}
 	else
@@ -710,6 +723,11 @@ void addOrderDetails()
 	file_data->status = 'P';
 
 	addLastOrder(file_data);
+
+	printf("-----------------------------\n");
+	printf("ORDER SUCCESSFULL           |\n");
+	printf("-----------------------------\n");
+
 }
 
 //####################### UPLOAD PRODUCT AND ORDER DETAILS ###############
