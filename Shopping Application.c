@@ -34,17 +34,6 @@ int main()
 
 	loadData(file);
 
-
-	printf("###############################################\n");
-
-	printf("\n# Student Name : Vaibhav Gholap\n");
-	printf("# Roll Number : 36008\n");
-	printf("# Center Number : SunBeam Infotech, Pune\n");
-	printf("# Course Name : PG-DAC\n");
-	printf("# Group Name : \n");
-	printf("# Mission Statement : I WILL NEVER QUITE\n");
-	printf("################################################\n");
-
 	while(main_menu_choice = get_main_menu_choice())
 	{
 		switch(main_menu_choice)
